@@ -4,7 +4,7 @@ public class TushareApiOutDTO {
     private String request_id;
     private Integer code;
     private String msg;
-    private Data data;
+//    private Data data;
 
     public String getRequest_id() {
         return request_id;
@@ -29,12 +29,12 @@ public class TushareApiOutDTO {
     public void setMsg(String msg) {
         this.msg = msg;
     }
-
-    public Data getData() {
-        return data;
-    }
-
-    public void setData(Data data) {
-        this.data = data;
-    }
+//
+//    public Data getData() {
+//        return data;
+//    }
+//
+//    public void setData(Data data) {
+//        this.data = data;
+//    }
 }

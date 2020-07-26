@@ -1,6 +1,7 @@
 package io.cjf.tusharejavasdk.api;
 
 import io.cjf.tusharejavasdk.dto.in.TushareApiInDTO;
+import io.cjf.tusharejavasdk.dto.out.TushareApiOutDTO;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import retrofit2.Call;
@@ -34,8 +35,8 @@ class TushareApiTest {
         TushareApiInDTO apiInDTO = new TushareApiInDTO();
         apiInDTO.setApi_name("stock_basic");
         apiInDTO.setToken("514b2a5b04cbc6c329c1bd8cc326d22ad9dfd3102b976f076397a49c");
-        Call<Object> call = tushareApi.invoke(apiInDTO);
-        Response<Object> response = call.execute();
-        Object body = response.body();
+        Call<TushareApiOutDTO> call = tushareApi.invoke(apiInDTO);
+        Response<TushareApiOutDTO> response = call.execute();
+        TushareApiOutDTO body = response.body();
     }
 }
