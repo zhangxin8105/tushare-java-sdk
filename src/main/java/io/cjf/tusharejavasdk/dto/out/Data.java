@@ -4,7 +4,7 @@ import java.util.List;
 
 public class Data {
     private List<String> fields;
-    private List<String> items;
+    private List<List<String>> items;
     private Boolean has_more;
 
     public List<String> getFields() {
@@ -15,11 +15,11 @@ public class Data {
         this.fields = fields;
     }
 
-    public List<String> getItems() {
+    public List<List<String>> getItems() {
         return items;
     }
 
-    public void setItems(List<String> items) {
+    public void setItems(List<List<String>> items) {
         this.items = items;
     }
 
