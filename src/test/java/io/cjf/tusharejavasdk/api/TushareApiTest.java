@@ -29,9 +29,6 @@ class TushareApiTest {
 
     @Test
     void invoke() throws IOException {
-        Map<String, Object> map = new HashMap<>();
-        map.put("api_name", "stock_basic");
-        map.put("token", "514b2a5b04cbc6c329c1bd8cc326d22ad9dfd3102b976f076397a49c");
         TushareApiInDTO apiInDTO = new TushareApiInDTO();
         apiInDTO.setApi_name("stock_basic");
         apiInDTO.setToken("514b2a5b04cbc6c329c1bd8cc326d22ad9dfd3102b976f076397a49c");
