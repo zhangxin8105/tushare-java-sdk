@@ -2,10 +2,7 @@ package io.cjf.tusharejavasdk.client.impl;
 
 import io.cjf.tusharejavasdk.api.TushareApi;
 import io.cjf.tusharejavasdk.client.TushareClient;
-import io.cjf.tusharejavasdk.vo.BasicStockVO;
-import io.cjf.tusharejavasdk.vo.ConstStockVO;
-import io.cjf.tusharejavasdk.vo.IndexVO;
-import io.cjf.tusharejavasdk.vo.StockIndexVO;
+import io.cjf.tusharejavasdk.vo.*;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import retrofit2.Retrofit;
@@ -46,4 +43,10 @@ class TushareClientImplTest {
     void indexBasic() throws Exception {
         List<IndexVO> indexVOS = tushareClient.indexBasic();
     }
+
+    @Test
+    void indexWeight() throws Exception {
+        List<IndexConWeightVO> indexConWeightVOS = tushareClient.indexWeight("000001.SH", "20200731");
+    }
+
 }

@@ -1,11 +1,7 @@
 package io.cjf.tusharejavasdk.client;
 
-import io.cjf.tusharejavasdk.vo.BasicStockVO;
-import io.cjf.tusharejavasdk.vo.ConstStockVO;
-import io.cjf.tusharejavasdk.vo.IndexVO;
-import io.cjf.tusharejavasdk.vo.StockIndexVO;
+import io.cjf.tusharejavasdk.vo.*;
 
-import java.io.IOException;
 import java.util.List;
 
 public interface TushareClient {
@@ -17,5 +13,7 @@ public interface TushareClient {
     List<ConstStockVO> hsConst(String type) throws Exception;
 
     List<IndexVO> indexBasic() throws Exception;
+
+    List<IndexConWeightVO> indexWeight(String indexCode, String tradeDate) throws Exception;
 
 }

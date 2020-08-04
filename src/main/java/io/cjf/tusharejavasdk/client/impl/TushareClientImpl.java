@@ -5,16 +5,12 @@ import io.cjf.tusharejavasdk.client.TushareClient;
 import io.cjf.tusharejavasdk.dto.in.TushareApiInDTO;
 import io.cjf.tusharejavasdk.dto.out.Data;
 import io.cjf.tusharejavasdk.dto.out.TushareApiOutDTO;
-import io.cjf.tusharejavasdk.vo.BasicStockVO;
-import io.cjf.tusharejavasdk.vo.ConstStockVO;
-import io.cjf.tusharejavasdk.vo.IndexVO;
-import io.cjf.tusharejavasdk.vo.StockIndexVO;
+import io.cjf.tusharejavasdk.vo.*;
 import retrofit2.Call;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -164,5 +160,35 @@ public class TushareClientImpl implements TushareClient {
         }).collect(Collectors.toList());
 
         return indexVOS;
+    }
+
+    @Override
+    public List<IndexConWeightVO> indexWeight(String indexCode, String tradeDate) throws Exception {
+        TushareApiInDTO apiInDTO = new TushareApiInDTO();
+        apiInDTO.setApi_name("index_weight");
+        apiInDTO.setToken(token);
+        HashMap<String, Object> params = new HashMap<>();
+        params.put("index_code", indexCode);
+        params.put("trade_date", tradeDate);
+        apiInDTO.setParams(params);
+        Call<TushareApiOutDTO> call = tushareApi.invoke(apiInDTO);
+        Response<TushareApiOutDTO> response = call.execute();
+        TushareApiOutDTO outDTO = response.body();
+        if (outDTO.getCode() != 0) {
+            throw new Exception(outDTO.getMsg());
+        }
+        Data data = outDTO.getData();
+        List<List<Object>> items = data.getItems();
+        List<IndexConWeightVO> indexConWeightVOS = items.stream().map(obj -> {
+            IndexConWeightVO indexConWeightVO = new IndexConWeightVO();
+            indexConWeightVO.setIndex_code((String) obj.get(0));
+            indexConWeightVO.setCon_code((String) obj.get(1));
+            indexConWeightVO.setTrade_date((String) obj.get(2));
+            indexConWeightVO.setWeight((Double) obj.get(3));
+
+            return indexConWeightVO;
+        }).collect(Collectors.toList());
+
+        return indexConWeightVOS;
     }
 }
