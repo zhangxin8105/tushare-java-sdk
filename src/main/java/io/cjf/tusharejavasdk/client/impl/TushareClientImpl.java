@@ -6,6 +6,7 @@ import io.cjf.tusharejavasdk.dto.in.TushareApiInDTO;
 import io.cjf.tusharejavasdk.dto.out.Data;
 import io.cjf.tusharejavasdk.dto.out.TushareApiOutDTO;
 import io.cjf.tusharejavasdk.vo.BasicStockVO;
+import io.cjf.tusharejavasdk.vo.ConstStockVO;
 import io.cjf.tusharejavasdk.vo.StockIndexVO;
 import retrofit2.Call;
 import retrofit2.Response;
@@ -103,5 +104,35 @@ public class TushareClientImpl implements TushareClient {
         }).collect(Collectors.toList());
 
         return stockIndexVOS;
+    }
+
+    @Override
+    public List<ConstStockVO> hsConst(String type) throws Exception {
+        TushareApiInDTO apiInDTO = new TushareApiInDTO();
+        apiInDTO.setApi_name("hs_const");
+        apiInDTO.setToken(token);
+        HashMap<String, Object> params = new HashMap<>();
+        params.put("hs_type", type);
+        apiInDTO.setParams(params);
+        Call<TushareApiOutDTO> call = tushareApi.invoke(apiInDTO);
+        Response<TushareApiOutDTO> response = call.execute();
+        TushareApiOutDTO outDTO = response.body();
+        if (outDTO.getCode() != 0) {
+            throw new Exception(outDTO.getMsg());
+        }
+        Data data = outDTO.getData();
+        List<List<Object>> items = data.getItems();
+        List<ConstStockVO> constStockVOS = items.stream().map(obj -> {
+            ConstStockVO constStockVO = new ConstStockVO();
+            constStockVO.setTs_code((String) obj.get(0));
+            constStockVO.setHs_type((String) obj.get(1));
+            constStockVO.setIn_date((String) obj.get(2));
+            constStockVO.setOut_date((String) obj.get(3));
+            constStockVO.setIs_new((String) obj.get(4));
+
+            return constStockVO;
+        }).collect(Collectors.toList());
+
+        return constStockVOS;
     }
 }

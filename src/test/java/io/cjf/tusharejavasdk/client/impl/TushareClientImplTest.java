@@ -3,6 +3,7 @@ package io.cjf.tusharejavasdk.client.impl;
 import io.cjf.tusharejavasdk.api.TushareApi;
 import io.cjf.tusharejavasdk.client.TushareClient;
 import io.cjf.tusharejavasdk.vo.BasicStockVO;
+import io.cjf.tusharejavasdk.vo.ConstStockVO;
 import io.cjf.tusharejavasdk.vo.StockIndexVO;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -33,5 +34,10 @@ class TushareClientImplTest {
     @Test
     void dailyBasic() throws Exception {
         List<StockIndexVO> stockIndexVOS = tushareClient.dailyBasic("20200804");
+    }
+
+    @Test
+    void hsConst() throws Exception {
+        List<ConstStockVO> constStockVOS = tushareClient.hsConst("SZ");
     }
 }
