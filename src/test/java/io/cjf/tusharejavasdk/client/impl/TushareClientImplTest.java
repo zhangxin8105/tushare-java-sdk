@@ -4,6 +4,7 @@ import io.cjf.tusharejavasdk.api.TushareApi;
 import io.cjf.tusharejavasdk.client.TushareClient;
 import io.cjf.tusharejavasdk.vo.BasicStockVO;
 import io.cjf.tusharejavasdk.vo.ConstStockVO;
+import io.cjf.tusharejavasdk.vo.IndexVO;
 import io.cjf.tusharejavasdk.vo.StockIndexVO;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -39,5 +40,10 @@ class TushareClientImplTest {
     @Test
     void hsConst() throws Exception {
         List<ConstStockVO> constStockVOS = tushareClient.hsConst("SZ");
+    }
+
+    @Test
+    void indexBasic() throws Exception {
+        List<IndexVO> indexVOS = tushareClient.indexBasic();
     }
 }

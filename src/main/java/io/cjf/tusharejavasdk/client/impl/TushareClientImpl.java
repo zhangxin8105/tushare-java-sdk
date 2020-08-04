@@ -7,6 +7,7 @@ import io.cjf.tusharejavasdk.dto.out.Data;
 import io.cjf.tusharejavasdk.dto.out.TushareApiOutDTO;
 import io.cjf.tusharejavasdk.vo.BasicStockVO;
 import io.cjf.tusharejavasdk.vo.ConstStockVO;
+import io.cjf.tusharejavasdk.vo.IndexVO;
 import io.cjf.tusharejavasdk.vo.StockIndexVO;
 import retrofit2.Call;
 import retrofit2.Response;
@@ -48,15 +49,15 @@ public class TushareClientImpl implements TushareClient {
         }
         Data data = outDTO.getData();
         List<List<Object>> items = data.getItems();
-        List<BasicStockVO> basicStockVOS = items.stream().map(strs -> {
+        List<BasicStockVO> basicStockVOS = items.stream().map(obj -> {
             BasicStockVO basicStockVO = new BasicStockVO();
-            basicStockVO.setTs_code((String) strs.get(0));
-            basicStockVO.setSymbol((String) strs.get(1));
-            basicStockVO.setName((String) strs.get(2));
-            basicStockVO.setArea((String) strs.get(3));
-            basicStockVO.setIndustry((String) strs.get(4));
-            basicStockVO.setMarket((String) strs.get(5));
-            basicStockVO.setList_date((String) strs.get(6));
+            basicStockVO.setTs_code((String) obj.get(0));
+            basicStockVO.setSymbol((String) obj.get(1));
+            basicStockVO.setName((String) obj.get(2));
+            basicStockVO.setArea((String) obj.get(3));
+            basicStockVO.setIndustry((String) obj.get(4));
+            basicStockVO.setMarket((String) obj.get(5));
+            basicStockVO.setList_date((String) obj.get(6));
             return basicStockVO;
         }).collect(Collectors.toList());
 
@@ -134,5 +135,34 @@ public class TushareClientImpl implements TushareClient {
         }).collect(Collectors.toList());
 
         return constStockVOS;
+    }
+
+    @Override
+    public List<IndexVO> indexBasic() throws Exception {
+        TushareApiInDTO apiInDTO = new TushareApiInDTO();
+        apiInDTO.setApi_name("index_basic");
+        apiInDTO.setToken(token);
+        Call<TushareApiOutDTO> call = tushareApi.invoke(apiInDTO);
+        Response<TushareApiOutDTO> response = call.execute();
+        TushareApiOutDTO outDTO = response.body();
+        if (outDTO.getCode() != 0) {
+            throw new Exception(outDTO.getMsg());
+        }
+        Data data = outDTO.getData();
+        List<List<Object>> items = data.getItems();
+        List<IndexVO> indexVOS = items.stream().map(obj -> {
+            IndexVO indexVO = new IndexVO();
+            indexVO.setTs_code((String) obj.get(0));
+            indexVO.setName((String) obj.get(1));
+            indexVO.setMarket((String) obj.get(2));
+            indexVO.setPublisher((String) obj.get(3));
+            indexVO.setCategory((String) obj.get(4));
+            indexVO.setBase_date((String) obj.get(5));
+            indexVO.setBase_point((Double) obj.get(6));
+            indexVO.setList_date((String) obj.get(7));
+            return indexVO;
+        }).collect(Collectors.toList());
+
+        return indexVOS;
     }
 }
