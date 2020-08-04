@@ -3,6 +3,7 @@ package io.cjf.tusharejavasdk.client.impl;
 import io.cjf.tusharejavasdk.api.TushareApi;
 import io.cjf.tusharejavasdk.client.TushareClient;
 import io.cjf.tusharejavasdk.vo.BasicStockVO;
+import io.cjf.tusharejavasdk.vo.StockIndexVO;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import retrofit2.Retrofit;
@@ -27,5 +28,10 @@ class TushareClientImplTest {
         List<BasicStockVO> basicStockVOS = tushareClient.stockBasic();
         assertNotNull(basicStockVOS);
 
+    }
+
+    @Test
+    void dailyBasic() throws Exception {
+        List<StockIndexVO> stockIndexVOS = tushareClient.dailyBasic("20200804");
     }
 }
